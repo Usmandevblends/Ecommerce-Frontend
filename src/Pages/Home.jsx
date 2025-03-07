@@ -1,9 +1,17 @@
-import React from 'react'
-import { Categories } from '../mockData'
+import React, { useEffect } from 'react'
+import { Categories, mockDate } from '../mockData'
 import HeroImage from '../assets/Images/Hero.jpg'
 import InfoSection from '../Components/InfoSection'
 import CategorySection from '../Components/CategorySection'
+import { setProducts } from '../Redux/ProductSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
 function Home() {
+    const dispatch = useDispatch()
+    const products = useSelector(state => state.product)
+    useEffect(() => {
+        dispatch(setProducts(mockDate))
+    }, [])
     return (
         <>
             <div className='bg-white mt-2 px-4 md:px-16 lg:px-24'>
@@ -29,8 +37,16 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <InfoSection/>
-                <CategorySection/>
+                <InfoSection />
+                <CategorySection />
+                <div>
+                    <h2>Top Products</h2>
+                    <div>
+                        {products && products.products && products.products.slice(0, 5).map((product) => ( // Check if products and products.products exist before mapping
+                            <div key={product.id}>{/* Display product info */}</div> // Add a key and populate product info
+                        ))}
+                    </div>
+                </div>
             </div>
         </>
     )
