@@ -77,7 +77,7 @@ function Cart() {
                         </div>
                     </div>
                     <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
-                        <Changeaddress onSave={handleSaveAddress} onCancel={() => setIsModelOpen(false)} />
+                        <Changeaddress setAddress={setAddress} setIsModelOpen={setIsModelOpen} />
                     </Modal>
                 </div>
             ) : (
