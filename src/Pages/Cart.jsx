@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import EmptyCart from '../assets/Images/Empty.png'
-import { FaTrashAlt } from 'react-icons/fa'
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import EmptyCart from '../assets/Images/Empty.png';
+import { FaTrashAlt } from 'react-icons/fa';
+import Modal from '../Components/Modal';
+import Changeaddress from '../Components/Changeaddress';
 
 function Cart() {
-    const cart = useSelector(state => state.cart)
-    const [address, setAddress] = useState('main street, 123')
+    const cart = useSelector(state => state.cart);
+    const [address, setAddress] = useState('main street, 123');
+    const [isModelOpen, setIsModelOpen] = useState(false);
+
+    const handleSaveAddress = (newAddress) => {
+        setAddress(newAddress);
+        setIsModelOpen(false);
+    };
 
     return (
         <div className='container mx-auto py-8 min-h-screen px-4 md:px-16 lg:px-24'>
@@ -37,7 +45,7 @@ function Cart() {
                                             <p>${product.price}</p>
                                             <div className="flex items-center justify-center border">
                                                 <button className='text-3xl font-bold px-1.5 border-r'>-</button>
-                                                <p className='text-xl  px-1'>{product.quantity}</p>
+                                                <p className='text-xl px-1'>{product.quantity}</p>
                                                 <button className='text-xl px-1'>+</button>
                                             </div>
                                             <p>${(product.quantity * product.price).toFixed(2)}</p>
@@ -46,7 +54,7 @@ function Cart() {
                                             </button>
                                         </div>
                                     </div>
-                                )
+                                );
                             })}
                         </div>
                         <div className='md:w-1/3 bg-white p-6 rounded-lg shadow-md border'>
@@ -59,7 +67,7 @@ function Cart() {
                                 <p>Shipping:</p>
                                 <p className='ml-2'>Shipping to:</p>
                                 <span>{address}</span>
-                                <button className='text-blue-500 hover:underline mt-1 ml-2'>change address</button>
+                                <button className='text-blue-500 hover:underline mt-1 ml-2' onClick={() => setIsModelOpen(true)}>Change Address</button>
                             </div>
                             <div className='flex justify-between mb-4'>
                                 <span>Total Price:</span>
@@ -68,14 +76,17 @@ function Cart() {
                             <button className='w-full bg-red-600 text-white py-2 hover:bg-red-800'>Proceed to checkout</button>
                         </div>
                     </div>
+                    <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
+                        <Changeaddress onSave={handleSaveAddress} onCancel={() => setIsModelOpen(false)} />
+                    </Modal>
                 </div>
             ) : (
-                <div className='flex justify-center '>
+                <div className='flex justify-center h-screen items-center'>
                     <img src={EmptyCart} alt="Empty cart" className='h-96' />
                 </div>
             )}
         </div>
-    )
+    );
 }
 
-export default Cart
+export default Cart;
