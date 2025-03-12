@@ -9,7 +9,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="bg-white shadow-md">
+      <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
           <div className="text-lg font-bold">
             <Link to="/">e-Shop</Link>
