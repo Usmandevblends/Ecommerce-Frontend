@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EmptyCart from '../assets/Images/Empty.png';
 import { FaTrashAlt } from 'react-icons/fa';
 import Modal from '../Components/Modal';
 import Changeaddress from '../Components/Changeaddress';
-import { remveFromCart , increaseQuantity, decreaseQuantity} from '../Redux/CartSlice';
+import { remveFromCart, increaseQuantity, decreaseQuantity } from '../Redux/CartSlice';
 
 function Cart() {
     const cart = useSelector(state => state.cart);
     const [address, setAddress] = useState('main street, 123');
     const [isModelOpen, setIsModelOpen] = useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate(); 
 
     const handleSaveAddress = (newAddress) => {
         setAddress(newAddress);
@@ -47,9 +47,9 @@ function Cart() {
                                         <div className='flex space-x-12 items-center'>
                                             <p>${product.price}</p>
                                             <div className="flex items-center justify-center border">
-                                                <button className='text-3xl font-bold px-1.5 border-r' onClick={()=> dispatch(decreaseQuantity(product.id))}>-</button>
+                                                <button className='text-3xl font-bold px-1.5 border-r' onClick={() => dispatch(decreaseQuantity(product.id))}>-</button>
                                                 <p className='text-xl px-1'>{product.quantity}</p>
-                                                <button className='text-xl px-1' onClick={()=> dispatch(increaseQuantity(product.id))}>+</button>
+                                                <button className='text-xl px-1' onClick={() => dispatch(increaseQuantity(product.id))}>+</button>
                                             </div>
                                             <p>${(product.quantity * product.price).toFixed(2)}</p>
                                             <button className='text-red-500 hover:text-red-700' onClick={() => dispatch(remveFromCart(product.id))}>
@@ -76,7 +76,7 @@ function Cart() {
                                 <span>Total Price:</span>
                                 <span>${cart.totalPrice?.toFixed(2) || '0.00'}</span>
                             </div>
-                            <button className='w-full bg-red-600 text-white py-2 hover:bg-red-800' onClick={()=> navigator('/checkout')}>Proceed to checkout</button>
+                            <button className='w-full bg-red-600 text-white py-2 hover:bg-red-800' onClick={() => navigate('/Checkout')}>Proceed to checkout</button>
                         </div>
                     </div>
                     <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
