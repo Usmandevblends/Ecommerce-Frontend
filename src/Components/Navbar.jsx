@@ -33,7 +33,7 @@ function Navbar() {
                 </span>
               )}
             </Link>
-            <button className="hidden md:block">Login | Register</button>
+            <button className="hidden md:block" >Login | Register</button>
             <button className="block md:hidden">
               <FaUser />
             </button>
