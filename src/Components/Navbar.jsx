@@ -1,11 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Login from "./Login";
+import Register from "./Register";
+import Modal from './Modal'
+import { setSearchTerm } from "../Redux/ProductSlice";
 
 function Navbar() {
-  // Get the cart products from Redux state
   const products = useSelector((state) => state.cart.products);
+  const [isModelOpen, setIsModelOpen] = useState(false)
+  const [isLogin, setIsLogin] = useState(true);
+  const [search, setSearch] = useState()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    dispatch(setSearchTerm(search))
+    navigate('/filter-data')
+  }
+
+  const openSignUp = () => {
+    setIsLogin(false); 
+    setIsModelOpen(true);
+    alert("Please select a product first ");
+  }
+
+  const openLogin = () => {
+    setIsLogin(true); 
+    setIsModelOpen(true);
+  }
+
 
   return (
     <>
@@ -15,11 +41,12 @@ function Navbar() {
             <Link to="/">e-Shop</Link>
           </div>
           <div className="relative flex-1 mx-4">
-            <form>
+            <form onSubmit={handleSearch}>
               <input
                 type="text"
                 placeholder="Search Product"
                 className="w-full border py-2 px-4"
+                onChange={(e) => setSearch(e.target.value)}
               />
               <FaSearch className="absolute top-3 right-3 rounded-full flex items-center text-red-500"></FaSearch>
             </form>
@@ -33,7 +60,7 @@ function Navbar() {
                 </span>
               )}
             </Link>
-            <button className="hidden md:block" >Login | Register</button>
+            <button className="hidden md:block" onClick={() => setIsModelOpen(true)} >Login | Register</button>
             <button className="block md:hidden">
               <FaUser />
             </button>
@@ -53,6 +80,9 @@ function Navbar() {
             About
           </Link>
         </div>
+        <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
+          {isLogin ? <Login  openSignUp={openSignUp} /> : <Register openLogin={openLogin} />}
+        </Modal>
       </nav>
     </>
   );
