@@ -15,7 +15,6 @@ function Home() {
         dispatch(setProducts(mockDate)) // Assuming mockDate is the data you're dispatching
     }, [dispatch])
 
-    console.log('Products:', products.products); // This should show an array of products
 
 
     return (
