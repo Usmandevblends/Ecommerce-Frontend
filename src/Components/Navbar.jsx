@@ -32,7 +32,6 @@ function Navbar() {
     setIsModelOpen(true);
   }
 
-
   return (
     <>
       <nav className="bg-white shadow-md sticky top-0 z-50">

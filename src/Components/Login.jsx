@@ -7,11 +7,11 @@ const Login = ({openSignUp}) => {
         <form action="">
             <div className='mb-4'>
                 <label htmlFor="" className='block text-gray-700'>Email</label>
-                <input type="email"  className='w-full px-3 py-2' placeholder='Enter Email' />
+                <input type="email"  className='w-full px-1 py-2' placeholder='Enter Email' />
             </div>
             <div className='mb-4'>
                 <label htmlFor=""  className='block text-gray-700'>Password</label>
-                <input type="Password" className='w-full px-3 py-2' placeholder='Enter Password'  />
+                <input type="Password" className='w-full px-1 py-2' placeholder='Enter Password'  />
             </div>
             <div className='mb-4 flex items-center justify-between'>
                 <label htmlFor="" className='inline-flex  items-center  '>
@@ -26,7 +26,7 @@ const Login = ({openSignUp}) => {
         </form>
         <div className='text-center'>
             <span className='text-gray-700'>Don't Have an Account?</span>
-            <button className='text-red-800' onClick={openSignUp}>Sign Up</button>
+            <button className='text-red-800  text' onClick={openSignUp}>Sign Up</button>
         </div>
     </div>
   )
