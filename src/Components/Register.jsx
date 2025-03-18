@@ -1,32 +1,75 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-const Register = ({openLogin}) => {
+const Register = ({ openLogin }) => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSignUp =  (e) => {
+        e.preventDefault();
+
+        const userSignUp = {
+            name,
+            email,
+            password,
+        };
+        console.log(userSignUp);
+    };
+
     return (
         <div>
             <h2 className='text-2xl font-semibold font-mono mb-4'>Sign Up</h2>
-            <form >
+            <form onSubmit={handleSignUp}>
                 <div className='mb-4'>
-                    <label htmlFor="" className='block text-gray-700'>Name</label>
-                    <input type="text" className='w-full px-1 py-2' placeholder='Enter Name' />
+                    <label htmlFor="name" className='block text-gray-700'>Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        onChange={(e) => setName(e.target.value)}
+                        className='w-full px-1 py-2 border rounded'
+                        placeholder='Enter Name'
+                        required
+                    />
                 </div>
                 <div className='mb-4'>
-                    <label htmlFor="" className='block text-gray-700'>Email</label>
-                    <input type="Email" className='w-full px-1 py-2' placeholder='Email' />
+                    <label htmlFor="email" className='block text-gray-700'>Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        className='w-full px-1 py-2 border rounded'
+                        placeholder='Email'
+                        required
+                    />
                 </div>
                 <div className='mb-4'>
-                    <label htmlFor="" className='block text-gray-700'>Password</label>
-                    <input type="Password" className='w-full px-1 py-2' placeholder='Enter Password' />
+                    <label htmlFor="password" className='block text-gray-700'>Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        className='w-full px-1 py-2 border rounded'
+                        placeholder='Enter Password'
+                        required
+                    />
                 </div>
                 <div className='mb-4'>
-                    <button type='submit' className='w-full bg-red-600  text-white py-2 font-semibold'>Sign up </button>
+                    <button
+                        type='submit'
+                        className='w-full bg-red-600 hover:bg-red-700 rounded-lg transition-all text-white py-2 font-semibold'
+                    >
+                        Sign Up
+                    </button>
                 </div>
             </form>
             <div className='text-center'>
                 <span className='text-gray-700 font-semibold'>Already Have an Account?</span>
-                <button className='text-red-800 font-semibold' onClick={openLogin}>Login</button>
+                <button className='text-red-800 font-semibold px-2' onClick={openLogin}>
+                    Login
+                </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Register
+export default Register;    

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -10,14 +11,28 @@ const Login = ({ openSignUp }) => {
             email: email,
             password: password,
         };
-        console.log(payLoad);
+
+    axios.post('https://api.escuelajs.co/api/v1/auth/login', payLoad)
+    .then((res)=> {
         Swal.fire({
             title: 'Login Successful!',
             text: 'You have successfully logged in.',
             icon: 'success',
             confirmButtonText: 'Cool',
         });
-    };
+        console.log('Login Successfuly', res);
+    })
+    .catch((err) => {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Invalid credentials. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'Okay',
+        });
+        console.log('Login Failed',err);
+    })
+};
+
 
     return (
         <div>
@@ -54,7 +69,7 @@ const Login = ({ openSignUp }) => {
                     <button
                         type='button'
                         onClick={handleSubmit}
-                        className='w-full bg-red-600 text-white py-2'
+                        className='w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-sm transition-all'
                     >
                         Login
                     </button>
@@ -62,7 +77,7 @@ const Login = ({ openSignUp }) => {
             </form>
             <div className='text-center'>
                 <span className='text-gray-700'>Don't Have an Account?</span>
-                <button className='text-red-800 text' onClick={openSignUp}>Sign Up</button>
+                <button className='text-red-800 text px-2' onClick={openSignUp}>Sign Up</button>
             </div>
         </div>
     );

@@ -5,8 +5,6 @@ import ProductCard from '../Components/ProductCard';
 const FilterData = () => {
     const productState = useSelector(state => state.product);
     const filterProducts = useMemo(() => productState?.filteredData || [], [productState]);
-    console.log(filterProducts, 'filterProducts');
-    console.log(productState, 'productState');
 
     return (
         <div className='mx-auto py-12 px-4 md:px-16 lg:px-24'>
