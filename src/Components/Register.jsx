@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 
-const Register = ({ openLogin }) => {
+const Register = ({ openLogin , setIsLogin, setIsModelOpen}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSignUp =  (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
 
         const userSignUp = {
-            name,
-            email,
-            password,
+            name:name,
+            email:email,
+            password:password,
         };
-        console.log(userSignUp);
+        localStorage.setItem("userObj", JSON.stringify(userSignUp));
+        setIsModelOpen(false);
+        setIsLogin(false);
+        
+        // localStorage.setItem(email, email);
+        // localStorage.setItem(password, password);
     };
-
     return (
         <div>
             <h2 className='text-2xl font-semibold font-mono mb-4'>Sign Up</h2>
@@ -55,9 +59,9 @@ const Register = ({ openLogin }) => {
                 </div>
                 <div className='mb-4'>
                     <button
-                        type='submit'
-                        className='w-full bg-red-600 hover:bg-red-700 rounded-lg transition-all text-white py-2 font-semibold'
-                    >
+                        type='button'
+                        onClick={handleSignUp}
+                        className='w-full bg-red-600 hover:bg-red-700 rounded-lg transition-all text-white py-2 font-semibold'>
                         Sign Up
                     </button>
                 </div>

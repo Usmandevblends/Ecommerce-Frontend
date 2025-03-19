@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +11,20 @@ function Navbar() {
   const products = useSelector((state) => state.cart.products);
   const [isModelOpen, setIsModelOpen] = useState(false)
   const [isLogin, setIsLogin] = useState(true);
-  const [search, setSearch] = useState()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [search, setSearch] = useState();
+  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    const userObj = localStorage.getItem('userObj');
+    if (userObj) {
+      const user = JSON.parse(userObj);
+      console.log(user);
+      setUser(user);
+    }
+  }, [isModelOpen]);
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -22,14 +33,19 @@ function Navbar() {
   }
 
   const openSignUp = () => {
-    setIsLogin(false); 
+    setIsLogin(false);
     setIsModelOpen(true);
     alert("Please select a product first ");
   }
 
   const openLogin = () => {
-    setIsLogin(true); 
+    setIsLogin(true);
     setIsModelOpen(true);
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('userObj');
+    setUser({});
   }
 
   return (
@@ -37,7 +53,7 @@ function Navbar() {
       <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
           <div className="text-lg font-bold">
-            <Link to="/">e-Shop</Link>
+            <Link to="/" onClick={handleLogout}>e-Shop</Link>
           </div>
           <div className="relative flex-1 mx-4">
             <form onSubmit={handleSearch}>
@@ -59,7 +75,11 @@ function Navbar() {
                 </span>
               )}
             </Link>
-            <button className="hidden md:block" onClick={() => setIsModelOpen(true)} >Login | Register</button>
+            <button className="hidden md:block" onClick={() => setIsModelOpen(true)} >
+              {
+                user.name ? user.name : "Login | Register"
+              }
+            </button>
             <button className="block md:hidden">
               <FaUser />
             </button>
@@ -80,7 +100,7 @@ function Navbar() {
           </Link>
         </div>
         <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
-          {isLogin ? <Login  openSignUp={openSignUp} /> : <Register openLogin={openLogin} />}
+          {isLogin ? <Login openSignUp={openSignUp} setIsLogin={setIsLogin} /> : <Register setIsLogin={setIsLogin} setIsModelOpen={setIsModelOpen} openLogin={openLogin} />}
         </Modal>
       </nav>
     </>
