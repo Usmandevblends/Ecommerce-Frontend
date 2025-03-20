@@ -1,13 +1,16 @@
+// components/Login.js
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser, setIsLogin } from '../Redux/authSlice';
 
 const Login = ({ openSignUp }) => {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
         const storedEmail = localStorage.getItem('email');
         const storedPassword = localStorage.getItem('password');
-
         if (storedEmail && storedPassword) {
             setEmail(storedEmail);
             setPassword(storedPassword);
@@ -15,12 +18,11 @@ const Login = ({ openSignUp }) => {
     }, []);
 
     const handleSubmit = () => {
-        const payLoad = {
-            email: email,
-            password: password,
-        };
+        const payLoad = { email, password };
         localStorage.setItem('email', email);
         localStorage.setItem('password', password);
+        dispatch(setUser(payLoad));
+        dispatch(setIsLogin(true));
     };
 
     return (

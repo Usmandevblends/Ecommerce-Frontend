@@ -1,13 +1,16 @@
+// components/Register.js
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser, setIsLogin } from '../Redux/authSlice';
 
-const Register = ({ openLogin, setIsLogin, setIsModelOpen }) => {
+const Register = ({ openLogin, setIsModelOpen }) => {
+    const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
         const storedUser = localStorage.getItem('userObj');
-
         if (storedUser) {
             const userData = JSON.parse(storedUser);
             setName(userData.name || '');
@@ -17,17 +20,12 @@ const Register = ({ openLogin, setIsLogin, setIsModelOpen }) => {
     }, []);
 
     const handleSignUp = async (e) => {
-        e.preventDefault(); 
-
-        const userSignUp = {
-            name: name,
-            email: email,
-            password: password,
-        };
-
-        localStorage.setItem("userObj", JSON.stringify(userSignUp));
+        e.preventDefault();
+        const userSignUp = { name, email, password };
+        localStorage.setItem('userObj', JSON.stringify(userSignUp));
+        dispatch(setUser(userSignUp));
+        dispatch(setIsLogin(false));
         setIsModelOpen(false);
-        setIsLogin(false);
     };
 
     return (
