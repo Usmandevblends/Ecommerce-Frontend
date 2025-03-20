@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Register = ({ openLogin , setIsLogin, setIsModelOpen}) => {
+const Register = ({ openLogin, setIsLogin, setIsModelOpen }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        const storedUser = localStorage.getItem('userObj');
+
+        if (storedUser) {
+            const userData = JSON.parse(storedUser);
+            setName(userData.name || '');
+            setEmail(userData.email || '');
+            setPassword(userData.password || '');
+        }
+    }, []);
+
     const handleSignUp = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); 
 
         const userSignUp = {
-            name:name,
-            email:email,
-            password:password,
+            name: name,
+            email: email,
+            password: password,
         };
+
         localStorage.setItem("userObj", JSON.stringify(userSignUp));
         setIsModelOpen(false);
         setIsLogin(false);
-        
-        // localStorage.setItem(email, email);
-        // localStorage.setItem(password, password);
     };
+
     return (
         <div>
             <h2 className='text-2xl font-semibold font-mono mb-4'>Sign Up</h2>
@@ -29,6 +39,7 @@ const Register = ({ openLogin , setIsLogin, setIsModelOpen}) => {
                     <input
                         type="text"
                         id="name"
+                        value={name}
                         onChange={(e) => setName(e.target.value)}
                         className='w-full px-1 py-2 border rounded'
                         placeholder='Enter Name'
@@ -40,6 +51,7 @@ const Register = ({ openLogin , setIsLogin, setIsModelOpen}) => {
                     <input
                         type="email"
                         id="email"
+                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className='w-full px-1 py-2 border rounded'
                         placeholder='Email'
@@ -51,6 +63,7 @@ const Register = ({ openLogin , setIsLogin, setIsModelOpen}) => {
                     <input
                         type="password"
                         id="password"
+                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className='w-full px-1 py-2 border rounded'
                         placeholder='Enter Password'
@@ -59,8 +72,7 @@ const Register = ({ openLogin , setIsLogin, setIsModelOpen}) => {
                 </div>
                 <div className='mb-4'>
                     <button
-                        type='button'
-                        onClick={handleSignUp}
+                        type='submit'
                         className='w-full bg-red-600 hover:bg-red-700 rounded-lg transition-all text-white py-2 font-semibold'>
                         Sign Up
                     </button>
@@ -76,4 +88,4 @@ const Register = ({ openLogin , setIsLogin, setIsModelOpen}) => {
     );
 };
 
-export default Register;    
+export default Register;

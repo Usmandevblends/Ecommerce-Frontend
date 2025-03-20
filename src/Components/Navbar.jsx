@@ -17,11 +17,9 @@ function Navbar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const userObj = localStorage.getItem('userObj');
     if (userObj) {
       const user = JSON.parse(userObj);
-      console.log(user);
       setUser(user);
     }
   }, [isModelOpen]);
