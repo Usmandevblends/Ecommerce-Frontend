@@ -3,26 +3,36 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setIsLogin } from '../Redux/authSlice';
 
-const Login = ({ openSignUp }) => {
+const Login = ({ openSignUp, setIsModelOpen }) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        const storedEmail = localStorage.getItem('email');
-        const storedPassword = localStorage.getItem('password');
-        if (storedEmail && storedPassword) {
-            setEmail(storedEmail);
-            setPassword(storedPassword);
-        }
-    }, []);
 
     const handleSubmit = () => {
-        const payLoad = { email, password };
-        localStorage.setItem('email', email);
-        localStorage.setItem('password', password);
-        dispatch(setUser(payLoad));
-        dispatch(setIsLogin(true));
+
+        const userSignIn = { email, password };
+        console.log(userSignIn);
+        const users = JSON.parse(localStorage.getItem('users'));
+        console.log(users);
+
+        console.log(userSignIn);
+        console.log(email,password);
+
+        const user = users.find((user) => user.email === email && user.password === password);
+        console.log(user);
+        if (user && user.name !== "") {
+
+
+            localStorage.setItem('userObj', JSON.stringify(user));
+
+            setIsModelOpen(false);
+
+
+        } else {
+            alert('Email or password incorrect');
+        }
+
     };
 
     return (

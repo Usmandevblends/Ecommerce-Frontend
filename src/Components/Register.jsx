@@ -1,30 +1,26 @@
-// components/Register.js
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setUser, setIsLogin } from '../Redux/authSlice';
+import React, { useEffect, useState } from 'react';
 
 const Register = ({ openLogin, setIsModelOpen }) => {
-    const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem('userObj');
-        if (storedUser) {
-            const userData = JSON.parse(storedUser);
-            setName(userData.name || '');
-            setEmail(userData.email || '');
-            setPassword(userData.password || '');
-        }
-    }, []);
 
-    const handleSignUp = async (e) => {
-        e.preventDefault();
+    const handleSignUp = () => {
+
         const userSignUp = { name, email, password };
+        console.log(userSignUp);
+        let users = JSON.parse(localStorage.getItem('users')); 
+        if(users && users.length > 0) {
+            users.push(userSignUp);
+        }else{
+            users = [userSignUp]; 
+        }
+
+        localStorage.setItem('users', JSON.stringify(users));
+        
         localStorage.setItem('userObj', JSON.stringify(userSignUp));
-        dispatch(setUser(userSignUp));
-        dispatch(setIsLogin(false));
+
         setIsModelOpen(false);
     };
 
@@ -70,7 +66,8 @@ const Register = ({ openLogin, setIsModelOpen }) => {
                 </div>
                 <div className='mb-4'>
                     <button
-                        type='submit'
+                        onClick={handleSignUp}
+                        type='button'
                         className='w-full bg-red-600 hover:bg-red-700 rounded-lg transition-all text-white py-2 font-semibold'>
                         Sign Up
                     </button>

@@ -98,7 +98,7 @@ function Navbar() {
           </Link>
         </div>
         <Modal isModelOpen={isModelOpen} setIsModelOpen={setIsModelOpen}>
-          {isLogin ? <Login openSignUp={openSignUp} setIsLogin={setIsLogin} /> : <Register setIsLogin={setIsLogin} setIsModelOpen={setIsModelOpen} openLogin={openLogin} />}
+          {isLogin ? <Login openSignUp={openSignUp} setIsLogin={setIsLogin} setIsModelOpen={setIsModelOpen} /> : <Register setIsLogin={setIsLogin} setIsModelOpen={setIsModelOpen} openLogin={openLogin} />}
         </Modal>
       </nav>
     </>
