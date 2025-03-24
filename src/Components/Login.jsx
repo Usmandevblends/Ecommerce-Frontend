@@ -1,7 +1,5 @@
-// components/Login.js
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser, setIsLogin } from '../Redux/authSlice';
 
 const Login = ({ openSignUp, setIsModelOpen }) => {
     const dispatch = useDispatch();
