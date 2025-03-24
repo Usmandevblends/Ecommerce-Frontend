@@ -15,7 +15,6 @@ const Register = ({ openLogin, setIsModelOpen }) => {
     }
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("userObj", JSON.stringify(userSignUp));
-
     setIsModelOpen(false);
   };
 

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 const Login = ({ openSignUp, setIsModelOpen }) => {
-    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -20,13 +18,8 @@ const Login = ({ openSignUp, setIsModelOpen }) => {
         const user = users.find((user) => user.email === email && user.password === password);
         console.log(user);
         if (user && user.name !== "") {
-
-
             localStorage.setItem('userObj', JSON.stringify(user));
-
             setIsModelOpen(false);
-
-
         } else {
             alert('Email or password incorrect');
         }
